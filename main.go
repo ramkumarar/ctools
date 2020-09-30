@@ -1,55 +1,32 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
+	"consul/config"
+	"consul/service"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"regexp"
-	"strings"
 )
 
 func main() {
+	space, err := config.GetSpace("service1")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	consulKey, err := config.GetConsulKey("space1", "test1")
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	jsonData := []byte(`{"Name": "Alice", "Age": 25 ,"occupation": "SE", "smoker": false}`)
 
-	var v interface{}
-	json.Unmarshal(jsonData, &v)
-
-	err := writeToFile("sample.properties", mapInterfaceToByteArray(v))
-
+	err = ioutil.WriteFile("sample.properties", service.MapJSONToPropsByteArray(jsonData), 0644)
 	if err != nil {
-		log.Fatalln("Unable to write a property file")
+		log.Fatalln("Not able to write to file")
 	}
 
-}
+	fmt.Println(space)
+	fmt.Println(consulKey)
 
-func mapInterfaceToByteArray(response interface{}) []byte {
-
-	data := response.(map[string]interface{})
-	b := new(bytes.Buffer)
-
-	for key, value := range data {
-		fmt.Fprintf(b, "%s=\"%v\"\n", key, value)
-	}
-
-	propStr := b.String()
-	propStr = strings.ReplaceAll(propStr, `="`, "=")
-
-	re := regexp.MustCompile(`"\r?\n`)
-	propStr = re.ReplaceAllString(propStr, "\n")
-
-	bytes := []byte(propStr)
-
-	return bytes
-
-}
-
-func writeToFile(fileName string, bytes []byte) error {
-	err := ioutil.WriteFile(fileName, bytes, 0644)
-	if err != nil {
-		return err
-	}
-	return nil
 }

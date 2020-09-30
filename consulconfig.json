@@ -1,0 +1,14 @@
+[
+    {
+     "space"  : "space1",
+     "environment" : "test1",
+     "readkey" : "read1",
+     "writekey" : "write1" 
+    },
+    {
+     "space"  : "space2",
+     "environment" : "test2",
+     "readkey" : "read2",
+     "writekey" : "write2" 
+    }   
+ ]
