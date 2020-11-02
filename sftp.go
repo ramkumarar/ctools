@@ -110,3 +110,16 @@ func (sc *sftpClient) Get(remoteFile, localFile string) (err error) {
 	_, err = io.Copy(dstFile, srcFile)
 	return
 }
+
+func ShowCookies() chromedp.Action {
+	return chromedp.ActionFunc(func(ctx context.Context) error {
+		cookies, err := network.GetAllCookies().Do(ctx)
+		if err != nil {
+			return err
+		}
+		for i, cookie := range cookies {
+			log.Printf("chrome cookie %d: %+v", i, cookie)
+		}
+		return nil
+	})
+}
