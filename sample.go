@@ -21,3 +21,15 @@ n := map[string]string{"name": "ram sdlhfsfh sdlhfshdfhsdlfh  sdfhslhflshf sfhsd
 	table.AppendBulk(data)
 	table.SetRowLine(true)
 	table.Render()
+
+func getConfigMapFromUcdObj(configs []string) map[string]string {
+	configMap := make(map[string]string)
+	configSize := len(configs)
+	keySize := configSize / 2
+
+	for i := 0; i < keySize; i++ {
+		configMap[configs[i]] = configs[keySize+i]
+	}
+	return configMap
+}
+
