@@ -1,3 +1,0 @@
-%{IPORHOST:proxyip} - (?:%{NOTSPACE:user}|-) \[%{HTTPDATE:timestamp}\] "(%{WORD:verb} /%{NOTSPACE:request_page} HTTP/%{NUMBER:httpversion})" %{NUMBER:response} (?:%{NUMBER:bytes}|-) "(%{IPORHOST:clientip})"
-
-[\"%{IPORHOST:proxyip} - (?:%{NOTSPACE:user}|-) \\[%{HTTPDATE:timestamp}\\] \"(%{WORD:verb} \/%{NOTSPACE:request_page} HTTP\/%{NUMBER:httpversion})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-) \"(%{IPORHOST:clientip})\"\"]
